@@ -9,7 +9,6 @@ import UIKit
 
 enum Status {
     case waiting
-    case open
     case processing
     case done
 }
@@ -21,5 +20,13 @@ class Task: NSObject {
     init(name: String = "Do something", status: Status = .waiting) {
         self.name = name
         self.status = status
+    }
+    
+    func nextStatus() {
+        switch status {
+        case .waiting: status = .processing
+        case .processing: status = .done
+        case .done: break
+        }
     }
 }

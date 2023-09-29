@@ -47,7 +47,7 @@ class ViewController: UIViewController {
             greetLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             greetLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200),
             
-            startButton.topAnchor.constraint(equalTo: greetLabel.bottomAnchor, constant: 20),
+            startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -250),
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startButton.widthAnchor.constraint(equalToConstant: 230),
             startButton.heightAnchor.constraint(equalToConstant: 100)
