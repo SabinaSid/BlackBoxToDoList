@@ -10,8 +10,13 @@ import UIKit
 class ViewController: UIViewController {
     let greetLabel = UILabel()
     let startButton = UIButton()
+    
+    var taskList: TaskList!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        taskList = TaskList(tasks: [Task(), Task(name: "English lessons"), Task(name: "Morning stretch")], dayOfWeek: "Monday")
         
         let greetingWords =
         """
@@ -39,6 +44,7 @@ class ViewController: UIViewController {
         startButton.titleLabel?.font = UIFont(name: "STIX Two Math", size: 22)
         startButton.backgroundColor = .black
         startButton.layer.cornerRadius = 10
+        startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         view.addSubview(startButton)
         
         greetLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +59,13 @@ class ViewController: UIViewController {
             startButton.heightAnchor.constraint(equalToConstant: 100)
         ])
         
-        // Do any additional setup after loading the view.
+    }
+    
+    @objc func startButtonTapped() {
+        if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "TaskSB") as? TaskViewController {
+            newViewController.taskList = taskList
+            self.present(newViewController, animated: true)
+        }
     }
 
 
