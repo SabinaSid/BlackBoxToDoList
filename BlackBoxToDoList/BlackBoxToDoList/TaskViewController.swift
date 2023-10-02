@@ -17,10 +17,18 @@ class TaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         guard let currentTask = taskList.currentTask else {
-            return print("That's all! You did all of your tasks!")
+            if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "EverythingIsDoneSB") as? EverythingIsDoneViewController {
+                self.present(newViewController, animated: true)
+                
+            }
+            return
         }
-        print( currentTask.name, currentTask.status)
+        
+        let recognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft(_:)))
+        recognizer.direction = .left
+        view.addGestureRecognizer(recognizer)
        
         taskNameLabel.text = currentTask.name
         taskNameLabel.textAlignment = .center
@@ -40,6 +48,27 @@ class TaskViewController: UIViewController {
             taskNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
+    
+    @objc func handleSwipeLeft(_ gesture: UISwipeGestureRecognizer) {
+            if gesture.state == .ended {
+                
+                taskList.nextTask()
+                
+                UIView.animate(withDuration: 1, animations: {
+                    self.view.backgroundColor = .white
+                    self.taskNameLabel.textColor = .black
+                    
+                    let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: self.taskNameLabel.text ?? "This task")
+                        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributeString.length))
+                    
+                    self.taskNameLabel.attributedText = attributeString
+                    
+                }) {_ in
+                    self.taskNameLabel.attributedText = nil
+                    self.viewDidLoad()
+                }
+            }
+        }
     
 
     /*
