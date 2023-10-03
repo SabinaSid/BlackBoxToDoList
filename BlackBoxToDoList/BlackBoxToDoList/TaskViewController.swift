@@ -26,9 +26,13 @@ class TaskViewController: UIViewController {
             return
         }
         
-        let recognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft(_:)))
-        recognizer.direction = .left
-        view.addGestureRecognizer(recognizer)
+        let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        leftSwipeRecognizer.direction = .left
+        view.addGestureRecognizer(leftSwipeRecognizer)
+        
+        let rightSwipeRecognizer =  UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        rightSwipeRecognizer.direction = .right
+        view.addGestureRecognizer(rightSwipeRecognizer)
        
         taskNameLabel.text = currentTask.name
         taskNameLabel.textAlignment = .center
@@ -49,7 +53,7 @@ class TaskViewController: UIViewController {
         ])
     }
     
-    @objc func handleSwipeLeft(_ gesture: UISwipeGestureRecognizer) {
+    @objc func handleSwipe(_ gesture: UISwipeGestureRecognizer) {
             if gesture.state == .ended {
                 
                 taskList.nextTask()

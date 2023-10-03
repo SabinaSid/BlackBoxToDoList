@@ -33,7 +33,6 @@ class EverythingIsDoneViewController: UIViewController {
                     // Установите анимированный UIImage в UIImageView
                     print("succsess")
                     gif.image = gifImage
-                    gif.animationImages = UIImage(data: <#T##Data#>)
                 }
             }
         }
@@ -55,7 +54,6 @@ class EverythingIsDoneViewController: UIViewController {
         
         //it doesn't animate
         gif.startAnimating()
-        gif.an
         print(gif.isAnimating)
         
         // Do any additional setup after loading the view.
