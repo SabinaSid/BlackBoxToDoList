@@ -8,7 +8,6 @@
 import UIKit
 //TODO: Add navigation controller
 //TODO: Make the greeting word animated
-//TODO: Load the list depending on the day of week
 //TODO: Add the dark skin
 //TODO: Add a local store
 class ViewController: UIViewController {
@@ -23,20 +22,7 @@ class ViewController: UIViewController {
         
         taskList = selectTaskList()
         
-        let greetingWords =
-        """
-        Hey!
-        
-        Today you'll start your day
-        
-        Your main task is to do something
-        
-        So...stay calm
-        
-        Are you ready?
-        """
-        
-        greetLabel.text = greetingWords
+        greetLabel.text = String()
         greetLabel.textAlignment = .center
         greetLabel.shadowOffset = CGSize(width: 0, height: -1)
         greetLabel.alpha = 1
@@ -58,7 +44,7 @@ class ViewController: UIViewController {
         startButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             greetLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            greetLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200),
+            greetLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
             
             startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -250),
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -87,17 +73,31 @@ class ViewController: UIViewController {
         }
         
         return currentList
-        /*
-        for item in arrayTaskLists {
-            if item.dayOfWeek.rawValue == dayOfWeek {
-                return item
-            }
-        }
-        
-        return TaskList(dayOfWeek: DayOfWeek(rawValue: dayOfWeek) ?? .monday)
-         */
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        let greetingWords =
+        """
+        Hey!
+        
+        Today you'll start your day
+        
+        Your main task is to do something
+        
+        So...stay calm and be focus
+        
+        Are you ready?
+        """
+        greetLabel.typingAnimate(message: greetingWords, duration: 0.1)
+    }
+}
 
+extension UILabel {
+    func typingAnimate(message: String, duration: Double){
+        for char in message {
+            self.text?.append(char)
+            RunLoop.current.run(until: Date() + duration)
+        }
+    }
 }
 
