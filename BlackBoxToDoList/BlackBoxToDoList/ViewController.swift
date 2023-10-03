@@ -7,22 +7,34 @@
 
 import UIKit
 //TODO: Add navigation controller
-//TODO: Make the greeting word animated
 //TODO: Add the dark skin
 //TODO: Add a local store
 class ViewController: UIViewController {
     let greetLabel = UILabel()
     let startButton = UIButton()
+    
     let dataSource = DataSource(arrayOfTaskLists: [])
     
     var taskList: TaskList!
+
+    let greetingWords =
+    """
+    Hey!
+    
+    Today you'll start your day
+    
+    Your main task is to do something
+    
+    So...stay calm and be focus
+    
+    Are you ready?
+    """
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         taskList = selectTaskList()
         
-        greetLabel.text = String()
         greetLabel.textAlignment = .center
         greetLabel.shadowOffset = CGSize(width: 0, height: -1)
         greetLabel.alpha = 1
@@ -51,7 +63,6 @@ class ViewController: UIViewController {
             startButton.widthAnchor.constraint(equalToConstant: 230),
             startButton.heightAnchor.constraint(equalToConstant: 100)
         ])
-        
     }
     
     @objc func startButtonTapped() {
@@ -76,28 +87,32 @@ class ViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        let greetingWords =
-        """
-        Hey!
-        
-        Today you'll start your day
-        
-        Your main task is to do something
-        
-        So...stay calm and be focus
-        
-        Are you ready?
-        """
-        greetLabel.typingAnimate(message: greetingWords, duration: 0.1)
+        typeTheGreeting()
     }
-}
-
-extension UILabel {
-    func typingAnimate(message: String, duration: Double){
-        for char in message {
-            self.text?.append(char)
-            RunLoop.current.run(until: Date() + duration)
+    
+    
+    func typeTheGreeting()  {
+        greetLabel.text = String()
+        var animationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addNextCharacter(_:)), userInfo: nil, repeats: true)
+    }
+        
+    @objc func addNextCharacter(_ sender: Timer) {
+        guard let text = greetLabel.text else {
+            sender.invalidate()
+            return
         }
+        
+        if text.count == greetingWords.count {
+            sender.invalidate()
+            return
+        }
+        
+        let index = text.endIndex
+        let char = greetingWords[index]
+        greetLabel.text?.append(char)
+        
+        
+        
     }
 }
 

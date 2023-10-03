@@ -42,6 +42,8 @@ class EverythingIsDoneViewController: UIViewController {
         NSLayoutConstraint.activate([
             congratulationsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             congratulationsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            congratulationsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            congratulationsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
             gif.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             gif.topAnchor.constraint(equalTo: congratulationsLabel.bottomAnchor, constant: 50),
