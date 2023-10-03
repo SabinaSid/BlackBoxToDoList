@@ -26,19 +26,17 @@ class EverythingIsDoneViewController: UIViewController {
         
         gif.frame = CGRect(x: 50, y: 100, width: 50, height: 50)
         
+        
+        
         if let gifURL = Bundle.main.url(forResource: "box-animated", withExtension: "gif") {
             if let gifData = try? Data(contentsOf: gifURL) {
-                // Создайте анимированный UIImage из данных GIF
-                if let gifImage = UIImage(data: gifData) {
-                    // Установите анимированный UIImage в UIImageView
-                    print("succsess")
+                if let gifImage = UIImage.gifImageWithData(gifData) {
                     gif.image = gifImage
                 }
             }
         }
-        gif.animationRepeatCount = 5000
+    
         view.addSubview(gif)
-        print(gif.isAnimating)
     
         congratulationsLabel.translatesAutoresizingMaskIntoConstraints = false
         gif.translatesAutoresizingMaskIntoConstraints = false
@@ -47,16 +45,11 @@ class EverythingIsDoneViewController: UIViewController {
             congratulationsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
             gif.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            gif.topAnchor.constraint(equalTo: congratulationsLabel.bottomAnchor, constant: 100),
+            gif.topAnchor.constraint(equalTo: congratulationsLabel.bottomAnchor, constant: 50),
             gif.widthAnchor.constraint(equalToConstant: 50),
             gif.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
-        //it doesn't animate
-        gif.startAnimating()
-        print(gif.isAnimating)
-        
-        // Do any additional setup after loading the view.
+
     }
     
 
@@ -70,4 +63,24 @@ class EverythingIsDoneViewController: UIViewController {
     }
     */
 
+}
+
+extension UIImage {
+    class func gifImageWithData(_ data: Data) -> UIImage? {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
+            return nil
+        }
+        
+        let frameCount = CGImageSourceGetCount(source)
+        var images: [UIImage] = []
+        
+        for i in 0..<frameCount {
+            if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                let image = UIImage(cgImage: cgImage)
+                images.append(image)
+            }
+        }
+        
+        return UIImage.animatedImage(with: images, duration: -0.5)
+    }
 }

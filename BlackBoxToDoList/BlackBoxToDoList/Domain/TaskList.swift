@@ -6,10 +6,18 @@
 //
 
 import UIKit
-
+enum DayOfWeek:Int {
+    case sunday = 1
+    case monday = 2
+    case tuesday = 3
+    case wednesday = 4
+    case thursday = 5
+    case friday = 6
+    case saturday = 7
+}
 class TaskList: NSObject {
     var tasks = [Task]()
-    var dayOfWeek: String
+    var dayOfWeek: DayOfWeek
    
     var currentTask: Task? {
         if let task = tasks.first(where: { $0.status == .processing} ) {
@@ -18,7 +26,7 @@ class TaskList: NSObject {
         return nil
     }
     
-    init(tasks: [Task] = [Task](), dayOfWeek: String) {
+    init(tasks: [Task] = [Task](), dayOfWeek: DayOfWeek) {
         self.tasks = tasks
         self.dayOfWeek = dayOfWeek
         
