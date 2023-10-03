@@ -24,10 +24,9 @@ class EverythingIsDoneViewController: UIViewController {
         congratulationsLabel.frame = CGRect()
         view.addSubview(congratulationsLabel)
         
+        view.backgroundColor = .white
+        
         gif.frame = CGRect(x: 50, y: 100, width: 50, height: 50)
-        
-        
-        
         if let gifURL = Bundle.main.url(forResource: "box-animated", withExtension: "gif") {
             if let gifData = try? Data(contentsOf: gifURL) {
                 if let gifImage = UIImage.gifImageWithData(gifData) {

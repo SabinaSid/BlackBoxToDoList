@@ -38,7 +38,7 @@ class TaskViewController: UIViewController {
         taskNameLabel.textAlignment = .center
         taskNameLabel.shadowOffset = CGSize(width: 0, height: -1)
         taskNameLabel.alpha = 1
-        taskNameLabel.numberOfLines = 6
+        taskNameLabel.numberOfLines = .max
         taskNameLabel.font = UIFont(name: "STIX Two Text", size: 25)
         taskNameLabel.textColor = .white
         taskNameLabel.frame = CGRect()
@@ -49,7 +49,9 @@ class TaskViewController: UIViewController {
         taskNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             taskNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            taskNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            taskNameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            taskNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            taskNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
         ])
     }
     

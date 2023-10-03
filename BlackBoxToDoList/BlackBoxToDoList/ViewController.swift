@@ -8,41 +8,20 @@
 import UIKit
 //TODO: Add navigation controller
 //TODO: Make the greeting word animated
-//TODO: Identify the day of week
 //TODO: Load the list depending on the day of week
 //TODO: Add the dark skin
 //TODO: Add a local store
 class ViewController: UIViewController {
     let greetLabel = UILabel()
     let startButton = UIButton()
+    let dataSource = DataSource(arrayOfTaskLists: [])
     
     var taskList: TaskList!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var monTaskList = TaskList(tasks: [Task(), Task(name: "English lessons"), Task(name: "Morning stretch")], dayOfWeek: .monday)
-        monTaskList.nextTask()
-        monTaskList.nextTask()
-        
-        var tueTaskList = TaskList(tasks: [Task(), Task(name: "2English lessons"), Task(name: "2Morning stretch")], dayOfWeek: .tuesday)
-        //tueTaskList.nextTask()
-        //tueTaskList.nextTask()
-        
-        var arrayTaskLists: [TaskList] = [monTaskList, tueTaskList]
-        
-        let date = Date()
-        let calendar = Calendar.current
-        let dayOfWeek = calendar.component(.weekday, from: date)
-        print(dayOfWeek)
-        
-        for item in arrayTaskLists {
-            if item.dayOfWeek.rawValue == dayOfWeek {
-                taskList = item
-            }
-        }
-        
-        
+        taskList = selectTaskList()
         
         let greetingWords =
         """
@@ -73,6 +52,8 @@ class ViewController: UIViewController {
         startButton.addTarget(self, action: #selector(startButtonTapped), for: .touchUpInside)
         view.addSubview(startButton)
         
+        view.backgroundColor = .white
+        
         greetLabel.translatesAutoresizingMaskIntoConstraints = false
         startButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -92,6 +73,29 @@ class ViewController: UIViewController {
             newViewController.taskList = taskList
             self.present(newViewController, animated: true)
         }
+    }
+    
+    func selectTaskList() -> TaskList {
+        let arrayTaskLists: [TaskList] = dataSource.arrayOfTaskLists
+        
+        let date = Date()
+        let calendar = Calendar.current
+        let dayOfWeek = calendar.component(.weekday, from: date)
+        
+        guard let currentList = arrayTaskLists.first(where: { $0.dayOfWeek.rawValue == dayOfWeek}) else {
+            return TaskList(dayOfWeek: DayOfWeek(rawValue: dayOfWeek) ?? .monday)
+        }
+        
+        return currentList
+        /*
+        for item in arrayTaskLists {
+            if item.dayOfWeek.rawValue == dayOfWeek {
+                return item
+            }
+        }
+        
+        return TaskList(dayOfWeek: DayOfWeek(rawValue: dayOfWeek) ?? .monday)
+         */
     }
 
 
