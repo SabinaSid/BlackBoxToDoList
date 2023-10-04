@@ -66,6 +66,7 @@ class ViewController: UIViewController {
     }
     
     @objc func startButtonTapped() {
+        taskList.start()
         if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "TaskSB") as? TaskViewController {
             newViewController.taskList = taskList
             self.present(newViewController, animated: true)

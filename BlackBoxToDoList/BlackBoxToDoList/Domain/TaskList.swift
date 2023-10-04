@@ -18,6 +18,7 @@ enum DayOfWeek:Int {
 class TaskList: NSObject {
     var tasks = [Task]()
     var dayOfWeek: DayOfWeek
+    var isStarted: Bool = false
    
     var currentTask: Task? {
         if let task = tasks.first(where: { $0.status == .processing} ) {
@@ -32,6 +33,10 @@ class TaskList: NSObject {
         
         //fist task is getting "processing" status
         self.tasks.first?.nextStatus()
+    }
+    
+    func start() {
+        isStarted = true
     }
     
     func nextTask()  {
