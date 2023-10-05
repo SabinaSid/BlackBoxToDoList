@@ -6,14 +6,11 @@
 //
 
 import UIKit
-//TODO: Add navigation controller
 //TODO: Add the dark skin
 //TODO: Add a local store
 class ViewController: UIViewController {
     let greetLabel = UILabel()
     let startButton = UIButton()
-    
-    let dataSource = DataSource(arrayOfTaskLists: [])
     
     var taskList: TaskList!
 
@@ -32,8 +29,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        taskList = selectTaskList()
         
         greetLabel.textAlignment = .center
         greetLabel.shadowOffset = CGSize(width: 0, height: -1)
@@ -69,24 +64,10 @@ class ViewController: UIViewController {
         taskList.start()
         if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "TaskSB") as? TaskViewController {
             newViewController.taskList = taskList
-            self.present(newViewController, animated: true)
+            self.navigationController?.pushViewController(newViewController, animated: true)
         }
     }
     
-    func selectTaskList() -> TaskList {
-        let arrayTaskLists: [TaskList] = dataSource.arrayOfTaskLists
-        
-        let date = Date()
-        let calendar = Calendar.current
-        let dayOfWeek = calendar.component(.weekday, from: date)
-        
-        guard let currentList = arrayTaskLists.first(where: { $0.dayOfWeek.rawValue == dayOfWeek}) else {
-            return TaskList(dayOfWeek: DayOfWeek(rawValue: dayOfWeek) ?? .monday)
-        }
-        
-        return currentList
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         typeTheGreeting()
     }
@@ -94,7 +75,7 @@ class ViewController: UIViewController {
     
     func typeTheGreeting()  {
         greetLabel.text = String()
-        var animationTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addNextCharacter(_:)), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(addNextCharacter(_:)), userInfo: nil, repeats: true)
     }
         
     @objc func addNextCharacter(_ sender: Timer) {
@@ -111,9 +92,6 @@ class ViewController: UIViewController {
         let index = text.endIndex
         let char = greetingWords[index]
         greetLabel.text?.append(char)
-        
-        
-        
     }
 }
 

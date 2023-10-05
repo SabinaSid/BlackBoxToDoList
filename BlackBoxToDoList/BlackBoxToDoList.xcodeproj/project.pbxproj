@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4859DA672ACEC89800E5C898 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4859DA662ACEC89800E5C898 /* NavigationController.swift */; };
 		48D3E6D32ACAFDA100B31646 /* EverythingIsDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D3E6D22ACAFDA100B31646 /* EverythingIsDoneViewController.swift */; };
 		48D3E6D52ACB018E00B31646 /* box-animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = 48D3E6D42ACB018E00B31646 /* box-animated.gif */; };
 		48D934B02AC6E7AF00E17C0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D934AF2AC6E7AF00E17C0B /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4859DA662ACEC89800E5C898 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		48D3E6D22ACAFDA100B31646 /* EverythingIsDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EverythingIsDoneViewController.swift; sourceTree = "<group>"; };
 		48D3E6D42ACB018E00B31646 /* box-animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "box-animated.gif"; sourceTree = "<group>"; };
 		48D934AC2AC6E7AF00E17C0B /* BlackBoxToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBoxToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,8 +73,9 @@
 				48D934C32AC6E7CF00E17C0B /* Domain */,
 				48D934AF2AC6E7AF00E17C0B /* AppDelegate.swift */,
 				48D934B12AC6E7AF00E17C0B /* SceneDelegate.swift */,
-				48D934B32AC6E7AF00E17C0B /* ViewController.swift */,
 				48FF65742ACC2B78007F4550 /* DataSource.swift */,
+				4859DA662ACEC89800E5C898 /* NavigationController.swift */,
+				48D934B32AC6E7AF00E17C0B /* ViewController.swift */,
 				48D934C82AC6F64600E17C0B /* TaskViewController.swift */,
 				48D3E6D22ACAFDA100B31646 /* EverythingIsDoneViewController.swift */,
 				48D934B52AC6E7AF00E17C0B /* Main.storyboard */,
@@ -169,6 +172,7 @@
 				48D934C72AC6E99900E17C0B /* TaskList.swift in Sources */,
 				48D934B42AC6E7AF00E17C0B /* ViewController.swift in Sources */,
 				48D934B02AC6E7AF00E17C0B /* AppDelegate.swift in Sources */,
+				4859DA672ACEC89800E5C898 /* NavigationController.swift in Sources */,
 				48D934B22AC6E7AF00E17C0B /* SceneDelegate.swift in Sources */,
 				48D3E6D32ACAFDA100B31646 /* EverythingIsDoneViewController.swift in Sources */,
 				48FF65752ACC2B78007F4550 /* DataSource.swift in Sources */,

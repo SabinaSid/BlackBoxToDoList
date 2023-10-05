@@ -20,8 +20,7 @@ class TaskViewController: UIViewController {
         
         guard let currentTask = taskList.currentTask else {
             if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "EverythingIsDoneSB") as? EverythingIsDoneViewController {
-                self.present(newViewController, animated: true)
-                
+                self.navigationController?.pushViewController(newViewController, animated: true)
             }
             return
         }
