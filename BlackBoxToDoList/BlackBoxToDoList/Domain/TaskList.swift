@@ -32,11 +32,22 @@ class TaskList: NSObject {
         self.dayOfWeek = dayOfWeek
         
         //fist task is getting "processing" status
-        self.tasks.first?.nextStatus()
+        if self.tasks.first?.status == .waiting {
+            self.tasks.first?.nextStatus()
+        }
+        
     }
     
     func start() {
         isStarted = true
+        UserDefaults.standard.setValue(isStarted, forKey: "isStarted")
+        UserDefaults.standard.setValue(dayOfWeek.rawValue, forKey: "dayOfWeekRawValue")
+        
+        let encoder = JSONEncoder()
+        if let encodedTasks = try? encoder.encode(tasks) {
+            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
+        }
+    
     }
     
     func nextTask()  {
@@ -47,11 +58,21 @@ class TaskList: NSObject {
         //current task is getting "done" status
         currentTask.nextStatus()
         
+        let encoder = JSONEncoder()
+        if let encodedTasks = try? encoder.encode(tasks) {
+            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
+        }
+        
         guard let nextTask = tasks.first(where: {$0.status == .waiting}) else {
             return
         }
        
         //next task is getting "processing" status
         nextTask.nextStatus()
+        
+        //let encoder = JSONEncoder()
+        if let encodedTasks = try? encoder.encode(tasks) {
+            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
+        }
     }
 }

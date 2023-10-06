@@ -7,13 +7,13 @@
 
 import UIKit
 
-enum Status {
-    case waiting
-    case processing
-    case done
+enum Status: Int, Codable {
+    case waiting = 1
+    case processing = 2
+    case done = 3
 }
 
-class Task: NSObject {
+class Task: NSObject, Codable {
     var name: String
     var status: Status
     
@@ -28,5 +28,6 @@ class Task: NSObject {
         case .processing: status = .done
         case .done: break
         }
+        
     }
 }
