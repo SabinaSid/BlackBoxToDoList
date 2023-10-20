@@ -6,7 +6,7 @@
 //
 
 import UIKit
-enum DayOfWeek:Int {
+enum DayOfWeek:Int, Codable {
     case sunday = 1
     case monday = 2
     case tuesday = 3
@@ -15,7 +15,7 @@ enum DayOfWeek:Int {
     case friday = 6
     case saturday = 7
 }
-class TaskList: NSObject {
+class TaskList: NSObject, Codable {
     var tasks = [Task]()
     var dayOfWeek: DayOfWeek
     var isStarted: Bool = false
@@ -31,20 +31,16 @@ class TaskList: NSObject {
         self.tasks = tasks
         self.dayOfWeek = dayOfWeek
         
+        super.init()
         //fist task is getting "processing" status
         if self.tasks.first?.status == .waiting {
             self.tasks.first?.nextStatus()
         }
-        
     }
     
     func start() {
         isStarted = true
-        UserDefaults.standard.setValue(isStarted, forKey: "isStarted")
-        UserDefaults.standard.setValue(dayOfWeek.rawValue, forKey: "dayOfWeekRawValue")
-        
-        saveTasks()
-    
+        saveTaskList()
     }
     
     func nextTask()  {
@@ -55,7 +51,7 @@ class TaskList: NSObject {
         //current task is getting "done" status
         currentTask.nextStatus()
         
-       saveTasks()
+        saveTaskList()
         
         guard let nextTask = tasks.first(where: {$0.status == .waiting}) else {
             return
@@ -64,14 +60,14 @@ class TaskList: NSObject {
         //next task is getting "processing" status
         nextTask.nextStatus()
         
-       saveTasks()
+        saveTaskList()
     }
-    
-    private func saveTasks() {
+        
+    private func saveTaskList() {
         let encoder = JSONEncoder()
         
-        if let encodedTasks = try? encoder.encode(tasks) {
-            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
+        if let encodedTaskList = try? encoder.encode(self) {
+            UserDefaults.standard.set(encodedTaskList, forKey: "taskList")
         }
     }
 }

@@ -18,32 +18,16 @@ class NavigationController: UINavigationController {
         let userDefaults = UserDefaults.standard
         let currentDayOfWeek =  Calendar.current.component(.weekday, from: Date())
         
-        /*
-        UserDefaults.standard.setValue(false, forKey: "isStarted")
-        UserDefaults.standard.setValue(currentDayOfWeek, forKey: "dayOfWeekRawValue")
         
-        let encoder = JSONEncoder()
-        if let encodedTasks = try? encoder.encode(selectTaskList().tasks) {
-            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
-        }
-        */
-        
-        let isStarted = userDefaults.bool(forKey: "isStarted")
-        //isStarted = false
-
-        if isStarted && userDefaults.integer(forKey: "dayOfWeekRawValue") == currentDayOfWeek {
-            if let savedData = userDefaults.data(forKey: "tasks"),
-               let decodedArray = try? JSONDecoder().decode([Task].self, from: savedData) {
-                let dayOfWeek = DayOfWeek(rawValue: currentDayOfWeek)
-                taskList = TaskList(tasks: decodedArray, dayOfWeek: dayOfWeek!)
-                print(dayOfWeek)
-                for item in decodedArray {
-                    print(item.status)
-                }
-                
-                taskList.isStarted = isStarted
-                print("tasks", decodedArray)
+        if let savedData = userDefaults.data(forKey: "taskList"), let decodedTaskList =  try? JSONDecoder().decode(TaskList.self, from: savedData) {
+            let dayOfWeek = DayOfWeek(rawValue: currentDayOfWeek)
+            
+            if decodedTaskList.dayOfWeek == dayOfWeek {
+                taskList = decodedTaskList
+            } else {
+                taskList = selectTaskList()
             }
+
         } else {
             taskList = selectTaskList()
         }
