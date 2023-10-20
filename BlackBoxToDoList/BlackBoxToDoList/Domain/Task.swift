@@ -16,10 +16,12 @@ enum Status: Int, Codable {
 class Task: NSObject, Codable {
     var name: String
     var status: Status
+    var date: Date
     
-    init(name: String = "Do something", status: Status = .waiting) {
+    init(name: String = "Do something", status: Status = .waiting, date: Date = Date()) {
         self.name = name
         self.status = status
+        self.date = date
     }
     
     func nextStatus() {

@@ -17,7 +17,7 @@ class NavigationController: UINavigationController {
         
         let userDefaults = UserDefaults.standard
         let currentDayOfWeek =  Calendar.current.component(.weekday, from: Date())
-        
+        //userDefaults.removeObject(forKey: "taskList")
         
         if let savedData = userDefaults.data(forKey: "taskList"), let decodedTaskList =  try? JSONDecoder().decode(TaskList.self, from: savedData) {
             let dayOfWeek = DayOfWeek(rawValue: currentDayOfWeek)
@@ -31,23 +31,17 @@ class NavigationController: UINavigationController {
         } else {
             taskList = selectTaskList()
         }
-        
-
-        //taskList.start()
         /*
-        taskList.nextTask()
-        taskList.nextTask()
-        taskList.nextTask()
-        taskList.nextTask()
-        taskList.nextTask()
-        taskList.nextTask()
-        taskList.nextTask()
-         */
-   
+        if let newViewController =  self.storyboard?.instantiateViewController(withIdentifier: "CreateTaskSB") as? CreateTaskViewController {
+            newViewController.taskList = taskList
+            self.pushViewController(newViewController, animated: true)
+            return
+        } */
+        
         switch taskList.isStarted {
            
         case false:
-            if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "StartSB") as? ViewController {
+            if let newViewController = self.storyboard?.instantiateViewController(withIdentifier: "StartSB") as? StartDayViewController {
                 newViewController.taskList = taskList
                 self.pushViewController(newViewController, animated: true)
             }

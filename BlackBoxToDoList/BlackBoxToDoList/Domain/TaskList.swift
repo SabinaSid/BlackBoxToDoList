@@ -62,6 +62,11 @@ class TaskList: NSObject, Codable {
         
         saveTaskList()
     }
+    
+    func addTask(newTask: Task) {
+        tasks.append(newTask)
+        saveTaskList()
+    }
         
     private func saveTaskList() {
         let encoder = JSONEncoder()

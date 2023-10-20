@@ -8,7 +8,7 @@
 import UIKit
 //TODO: Add the dark skin
 //TODO: Add a local store
-class ViewController: UIViewController {
+class StartDayViewController: UIViewController {
     let greetLabel = UILabel()
     let startButton = UIButton()
     
