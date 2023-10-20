@@ -43,10 +43,7 @@ class TaskList: NSObject {
         UserDefaults.standard.setValue(isStarted, forKey: "isStarted")
         UserDefaults.standard.setValue(dayOfWeek.rawValue, forKey: "dayOfWeekRawValue")
         
-        let encoder = JSONEncoder()
-        if let encodedTasks = try? encoder.encode(tasks) {
-            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
-        }
+        saveTasks()
     
     }
     
@@ -58,10 +55,7 @@ class TaskList: NSObject {
         //current task is getting "done" status
         currentTask.nextStatus()
         
-        let encoder = JSONEncoder()
-        if let encodedTasks = try? encoder.encode(tasks) {
-            UserDefaults.standard.set(encodedTasks, forKey: "tasks")
-        }
+       saveTasks()
         
         guard let nextTask = tasks.first(where: {$0.status == .waiting}) else {
             return
@@ -70,7 +64,12 @@ class TaskList: NSObject {
         //next task is getting "processing" status
         nextTask.nextStatus()
         
-        //let encoder = JSONEncoder()
+       saveTasks()
+    }
+    
+    private func saveTasks() {
+        let encoder = JSONEncoder()
+        
         if let encodedTasks = try? encoder.encode(tasks) {
             UserDefaults.standard.set(encodedTasks, forKey: "tasks")
         }
