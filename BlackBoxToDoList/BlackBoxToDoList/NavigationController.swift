@@ -15,8 +15,24 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        taskList = selectTaskList()
+        let userDefaults = UserDefaults.standard
+        let currentDayOfWeek =  Calendar.current.component(.weekday, from: Date())
         
+        
+        if let savedData = userDefaults.data(forKey: "taskList"), let decodedTaskList =  try? JSONDecoder().decode(TaskList.self, from: savedData) {
+            let dayOfWeek = DayOfWeek(rawValue: currentDayOfWeek)
+            
+            if decodedTaskList.dayOfWeek == dayOfWeek {
+                taskList = decodedTaskList
+            } else {
+                taskList = selectTaskList()
+            }
+
+        } else {
+            taskList = selectTaskList()
+        }
+        
+
         //taskList.start()
         /*
         taskList.nextTask()

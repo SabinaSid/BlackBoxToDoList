@@ -10,6 +10,7 @@ enum ErrorDataSource: Error {
     case taskListNotFound
 }
 class DataSource: NSObject {
+    /*
     private var mondayList = TaskList(tasks: [
         Task(name: "Drink 2 cup of water: warm and mineral"),
         Task(name: "Morning stretch"),
@@ -64,7 +65,31 @@ class DataSource: NSObject {
         Task(),
         Task(name: "Meditation"),
         Task(name: "Plan the next day")], dayOfWeek: .sunday)
+    */
     
+    private var mondayList = TaskList(tasks: [
+        Task(name: "English lessons"),
+        Task(name: "ABS workout"),
+        Task(name: "Reed the book")], dayOfWeek: .monday)
+    private var tuesdayList = TaskList(tasks: [
+        Task(name: "English lessons"),
+        Task(name: "Reed the book")], dayOfWeek: .tuesday)
+    private var wednesdayList = TaskList(tasks: [
+        Task(name: "English lessons"),
+        Task(name: "ABS workout")], dayOfWeek: .wednesday)
+    private var thursdayList = TaskList(tasks: [
+        Task(name: "English lessons")], dayOfWeek: .thursday)
+    private var fridayList = TaskList(tasks: [
+        Task(name: "English lessons"),
+        Task(name: "ABS workout")], dayOfWeek: .friday)
+    private var saturdayList = TaskList(tasks: [
+        Task(name: "English lessons"),
+        Task(name: "ABS workout"),
+        Task(name: "Algos"),
+        Task(name: "Kiss my wife")], dayOfWeek: .saturday)
+    private var sundayList = TaskList(tasks: [
+        Task(name: "English lessons"),
+        Task(name: "Read the book")], dayOfWeek: .sunday)
     var arrayOfTaskLists: [TaskList]
     
     init(arrayOfTaskLists: [TaskList] = []) {

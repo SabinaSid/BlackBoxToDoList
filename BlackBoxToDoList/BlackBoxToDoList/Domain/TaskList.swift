@@ -6,7 +6,7 @@
 //
 
 import UIKit
-enum DayOfWeek:Int {
+enum DayOfWeek:Int, Codable {
     case sunday = 1
     case monday = 2
     case tuesday = 3
@@ -15,7 +15,7 @@ enum DayOfWeek:Int {
     case friday = 6
     case saturday = 7
 }
-class TaskList: NSObject {
+class TaskList: NSObject, Codable {
     var tasks = [Task]()
     var dayOfWeek: DayOfWeek
     var isStarted: Bool = false
@@ -31,12 +31,16 @@ class TaskList: NSObject {
         self.tasks = tasks
         self.dayOfWeek = dayOfWeek
         
+        super.init()
         //fist task is getting "processing" status
-        self.tasks.first?.nextStatus()
+        if self.tasks.first?.status == .waiting {
+            self.tasks.first?.nextStatus()
+        }
     }
     
     func start() {
         isStarted = true
+        saveTaskList()
     }
     
     func nextTask()  {
@@ -47,11 +51,23 @@ class TaskList: NSObject {
         //current task is getting "done" status
         currentTask.nextStatus()
         
+        saveTaskList()
+        
         guard let nextTask = tasks.first(where: {$0.status == .waiting}) else {
             return
         }
        
         //next task is getting "processing" status
         nextTask.nextStatus()
+        
+        saveTaskList()
+    }
+        
+    private func saveTaskList() {
+        let encoder = JSONEncoder()
+        
+        if let encodedTaskList = try? encoder.encode(self) {
+            UserDefaults.standard.set(encodedTaskList, forKey: "taskList")
+        }
     }
 }
