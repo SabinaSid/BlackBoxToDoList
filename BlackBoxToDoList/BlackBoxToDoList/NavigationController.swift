@@ -31,12 +31,27 @@ class NavigationController: UINavigationController {
         } else {
             taskList = selectTaskList()
         }
-        /*
-        if let newViewController =  self.storyboard?.instantiateViewController(withIdentifier: "CreateTaskSB") as? CreateTaskViewController {
+        
+      /* if let newViewController =  self.storyboard?.instantiateViewController(withIdentifier: "CreateTaskSB") as? CreateTaskViewController {
             newViewController.taskList = taskList
             self.pushViewController(newViewController, animated: true)
             return
         } */
+        
+        if let newViewController =  self.storyboard?.instantiateViewController(withIdentifier: "TaskListSB") as? TaskListViewController {
+            newViewController.taskList = taskList
+            
+            //Set up navigationItem
+            newViewController.navigationItem.backButtonTitle = "Cancel"
+            newViewController.navigationItem.rightBarButtonItem =  UIBarButtonItem(systemItem: .add)
+            newViewController.navigationItem.title = "List of tasks"
+
+            
+            self.pushViewController(newViewController, animated: true)
+            return
+        }
+        
+       
         
         switch taskList.isStarted {
            

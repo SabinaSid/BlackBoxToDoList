@@ -32,11 +32,11 @@ class CreateTaskViewController: UIViewController {
         taskNameLabel.shadowOffset = CGSize(width: 0, height: -1)
         taskNameLabel.alpha = 1
         taskNameLabel.font = UIFont(name: "STIX Two Text", size: 20)
-        taskNameLabel.text = "Enter task's name"
+        taskNameLabel.text = "Enter tasks name"
         //taskNameLabel.textColor = .black
         view.addSubview(taskNameLabel)
         
-        taskNameTextField.placeholder = "Enter task's name"
+        taskNameTextField.placeholder = "Do something"
         taskNameTextField.borderStyle = .roundedRect
         //taskNameLabel.textColor = .black
         view.addSubview(taskNameTextField)
@@ -45,6 +45,7 @@ class CreateTaskViewController: UIViewController {
         submitButton.titleLabel?.font = UIFont(name: "STIX Two Math", size: 22)
         submitButton.layer.cornerRadius = 10
         submitButton.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
+        submitButton.backgroundColor = .darkGray
         //submitButton.backgroundColor = .black
         view.addSubview(submitButton)
         
@@ -76,13 +77,34 @@ class CreateTaskViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @objc func submitButtonTapped() {
-        let name = taskNameTextField.text ?? "Do smth"
+        guard let name = taskNameTextField.text, !name.isEmpty else {
+        shakeTextField(textField: taskNameTextField)
+           return
+        }
+        
         let date = Date()
     
         let task = Task(name: name, date: date)
         taskList.addTask(newTask: task)
         
-        print(taskList.tasks.last?.name)
+        if let newViewController =  self.storyboard?.instantiateViewController(withIdentifier: "TaskListSB") as? TaskListViewController {
+            newViewController.taskList = taskList
+            self.navigationController?.pushViewController(newViewController, animated: true)
+        }
+    }
+    
+    
+    
+    func shakeTextField(textField: UITextField)  {
+        let shakeAnimation = CABasicAnimation(keyPath: "position")
+        shakeAnimation.duration = 0.07
+        shakeAnimation.repeatCount = 2
+        shakeAnimation.autoreverses = true
+        let fromPoint = CGPoint(x: textField.center.x - 10, y: textField.center.y)
+        let toPoint = CGPoint(x: textField.center.x + 10, y: textField.center.y)
+        shakeAnimation.fromValue = NSValue(cgPoint: fromPoint)
+        shakeAnimation.toValue = NSValue(cgPoint: toPoint)
+        textField.layer.add(shakeAnimation, forKey: "position")
     }
 
     /*
